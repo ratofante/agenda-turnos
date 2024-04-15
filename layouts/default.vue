@@ -36,7 +36,7 @@ const burgerButtonHandler = () => {
     <v-navigation-drawer v-model="drawer" :rail="rail" @click="rail = false">
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-        title="John Leider"
+        title="Rodrigo González Wilkens"
         nav
       >
         <template v-slot:append>
@@ -52,21 +52,24 @@ const burgerButtonHandler = () => {
 
       <v-list density="compact" nav>
         <v-list-item
-          prepend-icon="mdi-home-city"
-          title="Home"
-          value="home"
+          prepend-icon="mdi-home"
+          title="Cuenta"
+          value="cuenta"
         ></v-list-item>
         <v-list-item
-          prepend-icon="mdi-account"
-          title="My Account"
-          value="account"
+          prepend-icon="mdi-calendar-multiple"
+          title="Calendario"
+          value="calendar"
         ></v-list-item>
+
         <v-list-item
           prepend-icon="mdi-account-group-outline"
-          title="Users"
-          value="users"
+          title="Clientes"
+          value="clientes"
         ></v-list-item>
       </v-list>
+
+      <v-divider></v-divider>
     </v-navigation-drawer>
 
     <v-main>
