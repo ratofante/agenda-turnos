@@ -1,6 +1,49 @@
 <script setup>
 import { useDisplay } from "vuetify";
 
+const userSections = [
+  {
+    to: "/",
+    icon: "mdi-book",
+    title: "Mi agenda",
+    value: "agenda",
+  },
+  {
+    to: "/",
+    icon: "mdi-calendar-multiple",
+    title: "Calendario",
+    value: "calendario",
+  },
+  {
+    to: "/",
+    icon: "mdi-account-group-outline",
+    title: "Clientes",
+    value: "clientes",
+  },
+];
+const siteSections = [
+  {
+    name: "Inicio",
+    to: "/",
+    icon: "mdi-home",
+  },
+  {
+    name: "Acerca",
+    to: "/",
+    icon: "mdi-card-bulleted-settings-outline",
+  },
+  {
+    name: "Servicios",
+    to: "/",
+    icon: "mdi-briefcase-arrow-left-right-outline",
+  },
+  {
+    name: "FAQ",
+    to: "/",
+    icon: "mdi-book-open-variant",
+  },
+];
+
 const { lgAndUp } = useDisplay();
 const drawer = ref(false);
 const rail = ref(false);
@@ -13,6 +56,17 @@ const burgerButtonHandler = () => {
     drawer.value = false;
     rail.value = true;
   }
+};
+
+const getUsers = async () => {
+  useAxios
+    .get("/user/list")
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 </script>
 <template>
@@ -28,7 +82,7 @@ const burgerButtonHandler = () => {
       <v-app-bar-title>Agenda Turnos</v-app-bar-title>
 
       <template v-slot:append>
-        <v-btn icon="mdi-bell-outline"></v-btn>
+        <v-btn icon="mdi-bell-outline" @click="getUsers"></v-btn>
         <v-btn icon="mdi-dots-vertical"></v-btn>
       </template>
     </v-app-bar>
@@ -50,26 +104,31 @@ const burgerButtonHandler = () => {
 
       <v-divider></v-divider>
 
-      <v-list density="compact" nav>
+      <v-list :lines="true" density="compact" nav>
         <v-list-item
-          prepend-icon="mdi-home"
-          title="Cuenta"
-          value="cuenta"
-        ></v-list-item>
-        <v-list-item
-          prepend-icon="mdi-calendar-multiple"
-          title="Calendario"
-          value="calendar"
-        ></v-list-item>
-
-        <v-list-item
-          prepend-icon="mdi-account-group-outline"
-          title="Clientes"
-          value="clientes"
+          v-for="(section, i) in userSections"
+          :key="i"
+          :to="section.to"
+          :prepend-icon="section.icon"
+          :title="section.title"
+          :value="section.value"
+          variant="plain"
         ></v-list-item>
       </v-list>
 
       <v-divider></v-divider>
+
+      <v-list density="compact" nav>
+        <v-list-subheader>Secciones</v-list-subheader>
+        <v-list-item
+          v-for="(section, i) in siteSections"
+          :to="section.to"
+          :prepend-icon="section.icon"
+          variant="plain"
+        >
+          {{ section.name }}
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
     <v-main>
